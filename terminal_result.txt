@@ -14,3 +14,7 @@ conf: .\code\confs\LOL_smallNet, heat: 0, name: 1, PSNR: 13.14, SSIM: 0.72, LPIP
 Results in: I:\Python\Research\Baselines\Baseline3\LLFlow\code\..\results\.\code\confs\LOL_smallNet\measure_full.csv
 Mean: heat: 0.00, name: 0.50, PSNR: 13.14, SSIM: 0.72, LPIPS: 0.63, LRC PSNR: 6.79
 (LLFlow) PS I:\Python\Research\Baselines\Baseline3\LLFlow> 
+
+LOL-pc
+
+The paired LOL-pc test failed due to CUDA out-of-memory on a high-resolution (5712 x 4284) bathroom image. The issue was not a path or configuration error; it was a hardware-memory limit caused by running the larger LLFlow model on a full-resolution input. The smaller LOL_smallNet model fit successfully, while the larger LOL-pc model required the paired images to be resized before evaluation.
