@@ -151,13 +151,12 @@ def main():
 
         lr = imread(lr_path)
         hr = imread(hr_path)
-        his = hiseq_color_cv2_img(lr)
-        if opt.get("histeq_as_input", False):
-            lr = his
-        
         h, w, c = lr.shape
         lq_orig = lr.copy()
         lr, padding_params = auto_padding(lr, times=pad_factor)
+        his = hiseq_color_cv2_img(lr)
+        if opt.get("histeq_as_input", False):
+            lr = his
         
         lr_t = t(lr)
         if opt["datasets"]["train"].get("log_low", False):
