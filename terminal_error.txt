@@ -3,26 +3,10 @@ OrderedDict([('manual_seed', 10), ('lr_G', 0.0005), ('weight_decay_G', 0), ('bet
 Out dir: I:\Python\Research\Baselines\Baseline3\LLFlow\code\..\results\.\code\confs\LOL_smallNet
 Setting up [LPIPS] perceptual loss: trunk [alex], v[0.1], spatial [off]
 Loading model from: C:\Users\BBM\miniconda3\envs\LLFlow\lib\site-packages\lpips\weights\v0.1\alex.pth
-C:\Users\BBM\miniconda3\envs\LLFlow\lib\site-packages\torch\nn\functional.py:718: UserWarning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (Triggered internally at  ..\c10/core/TensorImpl.h:1156.)
-  return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)
 Traceback (most recent call last):
-  File ".\code\test.py", line 215, in <module>
+  File ".\code\test.py", line 224, in <module>
     main()
   File ".\code\test.py", line 167, in main
-    sr_t = model.get_sr(lq=lr_t.cuda(), heat=None)
-  File "I:\Python\Research\Baselines\Baseline3\LLFlow\code\models\LLFlow_model.py", line 273, in get_sr
-    return self.get_sr_with_z(lq, heat, seed, z, epses)[0]
-  File "I:\Python\Research\Baselines\Baseline3\LLFlow\code\models\LLFlow_model.py", line 296, in get_sr_with_z
-    sr, logdet = self.netG(lr=lq, z=z, eps_std=heat, reverse=True, epses=epses)
-  File "C:\Users\BBM\miniconda3\envs\LLFlow\lib\site-packages\torch\nn\modules\module.py", line 1051, in _call_impl
-    return forward_call(*input, **kwargs)
-  File "C:\Users\BBM\miniconda3\envs\LLFlow\lib\site-packages\torch\cuda\amp\autocast_mode.py", line 141, in decorate_autocast
-    return func(*args, **kwargs)
-  File "I:\Python\Research\Baselines\Baseline3\LLFlow\code\models\modules\LLFlow_arch.py", line 113, in forward
-    return self.reverse_flow(lr, z, y_onehot=y_label, eps_std=eps_std, epses=epses, lr_enc=lr_enc,
-  File "I:\Python\Research\Baselines\Baseline3\LLFlow\code\models\modules\LLFlow_arch.py", line 222, in reverse_flow
-    z = squeeze2d(lr_enc['color_map'], 8)
-  File "I:\Python\Research\Baselines\Baseline3\LLFlow\code\models\modules\flow.py", line 124, in squeeze2d
-    assert H % factor == 0 and W % factor == 0, "{}".format((H, W, factor))
-AssertionError: (5712, 4284, 8)
+    lr_t = torch.cat([lr_t, his], dim=1)
+RuntimeError: torch.cat(): Sizes of tensors must match except in dimension 1. Got 5728 and 5712 in dimension 2 (The offending index is 1)
 (LLFlow) PS I:\Python\Research\Baselines\Baseline3\LLFlow> 
