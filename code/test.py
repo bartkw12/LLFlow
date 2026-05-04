@@ -19,6 +19,14 @@ def fiFindByWildcard(wildcard):
     return natsort.natsorted(glob.glob(wildcard, recursive=True))
 
 
+def find_image_files(folder):
+    patterns = ('*.png', '*.PNG', '*.jpg', '*.JPG', '*.jpeg', '*.JPEG')
+    paths = []
+    for pattern in patterns:
+        paths.extend(fiFindByWildcard(os.path.join(folder, pattern)))
+    return natsort.natsorted(paths)
+
+
 def load_model(conf_path):
     opt = option.parse(conf_path, is_train=False)
     opt['gpu_ids'] = None
@@ -89,8 +97,25 @@ def main():
     lr_dir = opt['dataroot_LR']
     hr_dir = opt['dataroot_GT']
 
-    lr_paths = fiFindByWildcard(os.path.join(lr_dir, '*.png'))
-    hr_paths = fiFindByWildcard(os.path.join(hr_dir, '*.png'))
+    lr_paths = find_image_files(lr_dir)
+    hr_paths = find_image_files(hr_dir)
+
+    if len(lr_paths) == 0 or len(hr_paths) == 0:
+        raise FileNotFoundError(
+            f"No paired images found. LR dir: {lr_dir}, GT dir: {hr_dir}. Supported extensions: png, jpg, jpeg"
+        )
+
+    if len(lr_paths) != len(hr_paths):
+        raise ValueError(
+            f"Mismatched paired image counts. LR: {len(lr_paths)}, GT: {len(hr_paths)}"
+        )
+
+    lr_names = [os.path.splitext(os.path.basename(path))[0] for path in lr_paths]
+    hr_names = [os.path.splitext(os.path.basename(path))[0] for path in hr_paths]
+    if lr_names != hr_names:
+        raise ValueError(
+            f"Paired filenames do not align. LR names: {lr_names}, GT names: {hr_names}"
+        )
 
     this_dir = os.path.dirname(os.path.realpath(__file__))
     test_dir = os.path.join(this_dir, '..', 'results', conf)
@@ -165,6 +190,9 @@ def main():
 
         # df.to_csv(path_out_measures + "_", index=False)
         # os.rename(path_out_measures + "_", path_out_measures)
+
+    if df is None:
+        raise RuntimeError('No paired images were processed, so no measurements were generated.')
 
     df.to_csv(path_out_measures, index=False)
     os.rename(path_out_measures, path_out_measures_final)
