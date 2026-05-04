@@ -28,7 +28,7 @@ le_curve: false
 #### datasets
 datasets:
   train:
-    root: ../training
+    root: I:\Python\Research\Baselines\Baseline3\LLFlow\training
     quant: 32
     use_shuffle: true
     n_workers: 1
@@ -43,7 +43,7 @@ datasets:
     gamma_aug: false
 
   val:
-    root: ../training
+    root: I:\Python\Research\Baselines\Baseline3\LLFlow\training
     n_workers: 1
     quant: 32
     n_max: 20

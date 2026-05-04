@@ -1,0 +1,205 @@
+(LLFlow) PS I:\Python\Research\Baselines\Baseline3\LLFlow> python .\code\train.py --opt .\code\confs\LOL_smallNet_quick.yml
+OrderedDict([('manual_seed', 10), ('lr_G', 0.0005), ('weight_decay_G', 0), ('beta1', 0.9), ('beta2', 0.99), ('lr_scheme', 'MultiStepLR'), ('warmup_iter', -1), ('lr_steps_rel', [0.5, 0.75, 0.9, 0.95]), ('lr_gamma', 0.5), ('weight_l1', 0), ('weight_fl', 1), ('niter', 300), ('val_freq', 100), ('lr_steps', [150, 225, 270, 285])])
+Disabled distributed training.
+Path already exists. Rename it to [I:\Python\Research\Baselines\Baseline3\LLFlow\experiments\train_quick_smallNet_300iter_archived_260504-153940]
+26-05-04 15:39:40.564 - INFO:   name: train_quick_smallNet_300iter
+  use_tb_logger: False
+  model: LLFlow
+  distortion: sr
+  scale: 1
+  gpu_ids: [0]
+  dataset: LoL
+  optimize_all_z: False
+  cond_encoder: ConEncoder1
+  train_gt_ratio: 0.2
+  avg_color_map: False
+  concat_histeq: True
+  histeq_as_input: False
+  concat_color_map: False
+  gray_map: False
+  align_condition_feature: False
+  align_weight: 0.001
+  align_maxpool: True
+  to_yuv: False
+  encode_color_map: False
+  le_curve: False
+  datasets:[
+    train:[
+      root: I:\Python\Research\Baselines\Baseline3\LLFlow\training
+      quant: 32
+      use_shuffle: True
+      n_workers: 1
+      batch_size: 4
+      use_flip: True
+      color: RGB
+      use_crop: True
+      GT_size: 128
+      noise_prob: 0
+      noise_level: 5
+      log_low: True
+      gamma_aug: False
+      phase: train
+      scale: 1
+      data_type: img
+    ]
+    val:[
+      root: I:\Python\Research\Baselines\Baseline3\LLFlow\training
+      n_workers: 1
+      quant: 32
+      n_max: 20
+      batch_size: 1
+      log_low: True
+      phase: val
+      scale: 1
+      data_type: img
+    ]
+  ]
+  dataroot_unpaired: test_image_unpaired
+  dataroot_GT: test_pairs/high
+  dataroot_LR: test_pairs/low
+  model_path: weights/LOL_smallNet.pth
+  heat: 0
+  network_G:[
+    which_model_G: LLFlow
+    in_nc: 3
+    out_nc: 3
+    nf: 32
+    nb: 4
+    train_RRDB: False
+    train_RRDB_delay: 0.5
+    flow:[
+      K: 4
+      L: 3
+      noInitialInj: True
+      coupling: CondAffineSeparatedAndCond
+      additionalFlowNoAffine: 2
+      conditionInFeaDim: 64
+      split:[
+        enable: False
+      ]
+      fea_up0: True
+      stackRRDB:[
+        blocks: [1]
+        concat: True
+      ]
+    ]
+    scale: 1
+  ]
+  path:[
+    strict_load: True
+    resume_state: auto
+    root: I:\Python\Research\Baselines\Baseline3\LLFlow
+    experiments_root: I:\Python\Research\Baselines\Baseline3\LLFlow\experiments\train_quick_smallNet_300iter
+    models: I:\Python\Research\Baselines\Baseline3\LLFlow\experiments\train_quick_smallNet_300iter\models
+    training_state: I:\Python\Research\Baselines\Baseline3\LLFlow\experiments\train_quick_smallNet_300iter\training_state
+    log: I:\Python\Research\Baselines\Baseline3\LLFlow\experiments\train_quick_smallNet_300iter
+    val_images: I:\Python\Research\Baselines\Baseline3\LLFlow\experiments\train_quick_smallNet_300iter\val_images
+  ]
+  train:[
+    manual_seed: 10
+    lr_G: 0.0005
+    weight_decay_G: 0
+    beta1: 0.9
+    beta2: 0.99
+    lr_scheme: MultiStepLR
+    warmup_iter: -1
+    lr_steps_rel: [0.5, 0.75, 0.9, 0.95]
+    lr_gamma: 0.5
+    weight_l1: 0
+    weight_fl: 1
+    niter: 300
+    val_freq: 100
+    lr_steps: [150, 225, 270, 285]
+  ]
+  val:[
+    n_sample: 4
+  ]
+  test:[
+    heats: [0.0, 0.7, 0.8, 0.9]
+  ]
+  logger:[
+    print_freq: 10
+    save_checkpoint_freq: 100
+  ]
+  is_train: True
+  dist: False
+
+26-05-04 15:39:40.564 - INFO: Random seed: 10
+rrdb params 0
+26-05-04 15:39:50.285 - INFO: Model [LLFlowModel] is created.
+Parameters of full network 5.4298 and encoder 1.7208
+26-05-04 15:39:50.285 - INFO: Start training from epoch: 0, iter: 0
+C:\Users\BBM\miniconda3\envs\LLFlow\lib\site-packages\torch\optim\lr_scheduler.py:129: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  warnings.warn("Detected call of `lr_scheduler.step()` before `optimizer.step()`. "
+<epoch:  0, iter:       1, lr:5.000e-04, t:-1.00e+00, td:3.38e+00, eta:-8.31e-02, nll:0.000e+00> 
+C:\Users\BBM\miniconda3\envs\LLFlow\lib\site-packages\torch\nn\functional.py:718: UserWarning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (Triggered internally at  ..\c10/core/TensorImpl.h:1156.)
+  return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)
+C:\Users\BBM\miniconda3\envs\LLFlow\lib\site-packages\torch\nn\functional.py:3657: UserWarning: The default behavior for interpolate/upsample with float scale_factor changed in 1.6.0 to align with other frameworks/libraries, and now uses scale_factor directly, instead of relying on the computed output size. If you wish to restore the old behavior, please set recompute_scale_factor=True. See the documentation of nn.Upsample for details. 
+  warnings.warn(
+26-05-04 15:39:57.198 - INFO: Parameters of full network 4.9676 and encoder 1.7014
+<epoch:  0, iter:       2, lr:5.000e-04, t:-1.00e+00, td:0.00e+00, eta:-8.28e-02, nll:-4.993e+00> 
+<epoch:  0, iter:       3, lr:5.000e-04, t:3.61e+00, td:0.00e+00, eta:2.98e-01, nll:1.831e+01> 
+<epoch:  0, iter:       4, lr:5.000e-04, t:1.76e-01, td:0.00e+00, eta:1.44e-02, nll:9.455e+00> 
+<epoch:  0, iter:       5, lr:5.000e-04, t:1.69e-01, td:0.00e+00, eta:1.39e-02, nll:4.243e+00> 
+<epoch:  0, iter:       6, lr:5.000e-04, t:1.65e-01, td:0.00e+00, eta:1.35e-02, nll:7.122e+00> 
+<epoch:  0, iter:       7, lr:5.000e-04, t:1.54e-01, td:0.00e+00, eta:1.25e-02, nll:3.097e+00> 
+<epoch:  0, iter:       8, lr:5.000e-04, t:2.21e-01, td:0.00e+00, eta:1.79e-02, nll:-4.007e+00> 
+<epoch:  0, iter:       9, lr:5.000e-04, t:2.01e-01, td:0.00e+00, eta:1.63e-02, nll:-6.155e+00> 
+<epoch:  0, iter:      10, lr:5.000e-04, t:2.03e-01, td:0.00e+00, eta:1.64e-02, nll:-6.120e+00> 
+<epoch:  0, iter:      11, lr:5.000e-04, t:2.09e-01, td:0.00e+00, eta:1.68e-02, nll:-6.207e+00> 
+<epoch:  0, iter:      12, lr:5.000e-04, t:2.01e-01, td:2.01e-03, eta:1.61e-02, nll:-5.829e+00> 
+<epoch:  0, iter:      13, lr:5.000e-04, t:2.28e-01, td:0.00e+00, eta:1.82e-02, nll:-6.234e+00> 
+<epoch:  0, iter:      14, lr:5.000e-04, t:2.22e-01, td:0.00e+00, eta:1.76e-02, nll:-6.326e+00> 
+<epoch:  0, iter:      15, lr:5.000e-04, t:2.23e-01, td:0.00e+00, eta:1.77e-02, nll:-7.339e+00> 
+<epoch:  0, iter:      16, lr:5.000e-04, t:2.33e-01, td:0.00e+00, eta:1.83e-02, nll:-7.655e+00> 
+<epoch:  0, iter:      17, lr:5.000e-04, t:2.01e-01, td:0.00e+00, eta:1.58e-02, nll:-8.342e+00> 
+<epoch:  0, iter:      18, lr:5.000e-04, t:2.12e-01, td:0.00e+00, eta:1.66e-02, nll:-7.701e+00> 
+<epoch:  0, iter:      19, lr:5.000e-04, t:2.21e-01, td:0.00e+00, eta:1.73e-02, nll:-8.712e+00> 
+<epoch:  0, iter:      20, lr:5.000e-04, t:2.02e-01, td:0.00e+00, eta:1.57e-02, nll:-6.349e+00> 
+<epoch:  0, iter:      21, lr:5.000e-04, t:2.01e-01, td:0.00e+00, eta:1.56e-02, nll:-6.277e+00> 
+<epoch:  0, iter:      22, lr:5.000e-04, t:2.49e-01, td:0.00e+00, eta:1.92e-02, nll:-8.149e+00> 
+<epoch:  0, iter:      23, lr:5.000e-04, t:1.87e-01, td:0.00e+00, eta:1.44e-02, nll:-8.037e+00> 
+<epoch:  0, iter:      24, lr:5.000e-04, t:2.37e-01, td:0.00e+00, eta:1.81e-02, nll:-7.400e+00> 
+<epoch:  0, iter:      30, lr:5.000e-04, t:2.06e-01, td:3.35e-04, eta:1.54e-02, nll:-8.072e+00> 
+<epoch:  0, iter:      40, lr:5.000e-04, t:2.06e-01, td:2.01e-04, eta:1.49e-02, nll:-9.119e+00> 
+<epoch:  0, iter:      50, lr:5.000e-04, t:2.16e-01, td:0.00e+00, eta:1.50e-02, nll:-1.007e+01> 
+<epoch:  0, iter:      60, lr:5.000e-04, t:2.06e-01, td:1.00e-03, eta:1.37e-02, nll:-1.026e+01> 
+<epoch:  0, iter:      70, lr:5.000e-04, t:2.02e-01, td:0.00e+00, eta:1.29e-02, nll:-1.270e+01> 
+<epoch:  0, iter:      80, lr:5.000e-04, t:2.10e-01, td:2.01e-04, eta:1.28e-02, nll:-8.199e+00> 
+<epoch:  0, iter:      90, lr:5.000e-04, t:2.15e-01, td:0.00e+00, eta:1.26e-02, nll:-1.143e+01> 
+<epoch:  0, iter:     100, lr:5.000e-04, t:2.19e-01, td:0.00e+00, eta:1.22e-02, nll:-1.101e+01> 
+26-05-04 15:40:27.269 - INFO: # Validation # PSNR: 1.9392e+01 SSIM: 6.0722e-01
+26-05-04 15:40:27.269 - INFO: <epoch:  0, iter:     100> psnr: 1.9392e+01 SSIM: 6.0722e-01
+26-05-04 15:40:27.269 - INFO: Saving models and training states.
+26-05-04 15:40:27.410 - INFO: Saving best models
+<epoch:  0, iter:     110, lr:5.000e-04, t:1.18e+00, td:1.00e-04, eta:6.24e-02, nll:-1.170e+01> 
+<epoch:  0, iter:     120, lr:5.000e-04, t:2.08e-01, td:9.53e-04, eta:1.04e-02, nll:-1.213e+01> 
+<epoch:  1, iter:     130, lr:5.000e-04, t:5.44e-01, td:3.02e-01, eta:2.57e-02, nll:-1.200e+01> 
+<epoch:  1, iter:     140, lr:5.000e-04, t:2.15e-01, td:0.00e+00, eta:9.55e-03, nll:-1.263e+01> 
+<epoch:  1, iter:     150, lr:2.500e-04, t:2.18e-01, td:1.21e-03, eta:9.07e-03, nll:-1.216e+01> 
+<epoch:  1, iter:     160, lr:2.500e-04, t:2.03e-01, td:7.01e-04, eta:7.90e-03, nll:-1.348e+01> 
+<epoch:  1, iter:     170, lr:2.500e-04, t:2.11e-01, td:0.00e+00, eta:7.62e-03, nll:-1.312e+01> 
+<epoch:  1, iter:     180, lr:2.500e-04, t:2.16e-01, td:9.99e-05, eta:7.19e-03, nll:-1.224e+01> 
+<epoch:  1, iter:     190, lr:2.500e-04, t:2.27e-01, td:1.56e-03, eta:6.93e-03, nll:-1.309e+01> 
+<epoch:  1, iter:     200, lr:2.500e-04, t:2.14e-01, td:2.01e-04, eta:5.94e-03, nll:-1.332e+01> 
+26-05-04 15:41:00.648 - INFO: # Validation # PSNR: 2.0025e+01 SSIM: 6.5534e-01
+26-05-04 15:41:00.648 - INFO: <epoch:  1, iter:     200> psnr: 2.0025e+01 SSIM: 6.5534e-01
+26-05-04 15:41:00.648 - INFO: Saving models and training states.
+26-05-04 15:41:00.783 - INFO: Saving best models
+<epoch:  1, iter:     210, lr:2.500e-04, t:1.08e+00, td:2.04e-04, eta:2.71e-02, nll:-1.397e+01> 
+<epoch:  1, iter:     220, lr:2.500e-04, t:2.15e-01, td:2.03e-04, eta:4.77e-03, nll:-1.188e+01> 
+<epoch:  1, iter:     230, lr:1.250e-04, t:2.07e-01, td:8.01e-04, eta:4.02e-03, nll:-1.149e+01> 
+<epoch:  1, iter:     240, lr:1.250e-04, t:2.05e-01, td:8.01e-04, eta:3.41e-03, nll:-1.336e+01> 
+<epoch:  2, iter:     250, lr:1.250e-04, t:5.38e-01, td:2.88e-01, eta:7.47e-03, nll:-9.552e+00> 
+<epoch:  2, iter:     260, lr:1.250e-04, t:2.24e-01, td:3.00e-04, eta:2.49e-03, nll:-1.350e+01> 
+<epoch:  2, iter:     270, lr:6.250e-05, t:2.06e-01, td:0.00e+00, eta:1.72e-03, nll:-1.104e+01> 
+<epoch:  2, iter:     280, lr:6.250e-05, t:2.08e-01, td:2.03e-04, eta:1.16e-03, nll:-1.249e+01> 
+<epoch:  2, iter:     290, lr:3.125e-05, t:2.09e-01, td:1.00e-04, eta:5.81e-04, nll:-1.427e+01> 
+<epoch:  2, iter:     300, lr:3.125e-05, t:2.17e-01, td:2.01e-04, eta:0.00e+00, nll:-1.371e+01> 
+26-05-04 15:41:33.842 - INFO: # Validation # PSNR: 2.0341e+01 SSIM: 6.8053e-01
+26-05-04 15:41:33.844 - INFO: <epoch:  2, iter:     300> psnr: 2.0341e+01 SSIM: 6.8053e-01
+26-05-04 15:41:33.844 - INFO: Saving models and training states.
+26-05-04 15:41:33.973 - INFO: Saving best models
+26-05-04 15:41:37.245 - INFO: Saving the final model.
+26-05-04 15:41:37.314 - INFO: End of training.
+(LLFlow) PS I:\Python\Research\Baselines\Baseline3\LLFlow> 
