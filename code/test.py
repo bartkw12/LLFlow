@@ -77,6 +77,14 @@ def imCropCenter(img, size):
 def impad(img, top=0, bottom=0, left=0, right=0, color=255):
     return np.pad(img, [(top, bottom), (left, right), (0, 0)], 'reflect')
 
+
+def auto_padding(img, times=16):
+    h, w, _ = img.shape
+    h1, w1 = (times - h % times) // 2, (times - w % times) // 2
+    h2, w2 = (times - h % times) - h1, (times - w % times) - w1
+    img = cv2.copyMakeBorder(img, h1, h2, w1, w2, cv2.BORDER_REFLECT)
+    return img, [h1, h2, w1, w2]
+
 def hiseq_color_cv2_img(img):
     (b, g, r) = cv2.split(img)
     bH = cv2.equalizeHist(b)
@@ -137,7 +145,7 @@ def main():
 
     scale = opt['scale']
 
-    pad_factor = 2
+    pad_factor = 16
 
     for lr_path, hr_path, idx_test in zip(lr_paths, hr_paths, range(len(lr_paths))):
 
@@ -147,11 +155,9 @@ def main():
         if opt.get("histeq_as_input", False):
             lr = his
         
-        # Pad image to be % 2
         h, w, c = lr.shape
         lq_orig = lr.copy()
-        lr = impad(lr, bottom=int(np.ceil(h / pad_factor) * pad_factor - h),
-                   right=int(np.ceil(w / pad_factor) * pad_factor - w))
+        lr, padding_params = auto_padding(lr, times=pad_factor)
         
         lr_t = t(lr)
         if opt["datasets"]["train"].get("log_low", False):
@@ -170,7 +176,10 @@ def main():
         # A normally-exposed image can also be obtained without finetuning the global brightness and we can achvieve compatible performance in terms of SSIM and LPIPS.
         mean_out = sr_t.view(sr_t.shape[0],-1).mean(dim=1)
         mean_gt = cv2.cvtColor(hr.astype(np.float32), cv2.COLOR_BGR2GRAY).mean()/255
-        sr = rgb(torch.clamp(sr_t*(mean_gt/mean_out), 0, 1))
+        sr = rgb(torch.clamp(
+            sr_t * (mean_gt / mean_out), 0, 1
+        )[:, :, padding_params[0]:sr_t.shape[2] - padding_params[1],
+          padding_params[2]:sr_t.shape[3] - padding_params[3]])
         sr = sr[:h * scale, :w * scale]
 
         path_out_sr = os.path.join(test_dir, "{:0.2f}".format(heat).replace('.', ''), os.path.basename(hr_path))
