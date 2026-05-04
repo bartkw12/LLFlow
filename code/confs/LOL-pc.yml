@@ -56,8 +56,8 @@ datasets:
 
 #### Test Settings
 dataroot_unpaired: I:\Python\Research\Baselines\Baseline3\LLFlow\test_image_unpaired
-dataroot_GT: D:\LOLdataset\eval15\high
-dataroot_LR: D:\LOLdataset\eval15\low
+dataroot_GT: I:\Python\Research\Baselines\Baseline3\LLFlow\test_pairs\high
+dataroot_LR: I:\Python\Research\Baselines\Baseline3\LLFlow\test_pairs\low
 model_path: I:\Python\Research\Baselines\Baseline3\LLFlow\weights\LOL.pth
 heat: 0 # This is the standard deviation of the latent vectors
 
