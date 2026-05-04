@@ -1,0 +1,14 @@
+(LLFlow) PS I:\Python\Research\Baselines\Baseline3\LLFlow> python .\code\test.py --opt .\code\confs\LOL_smallNet.yml
+OrderedDict([('manual_seed', 10), ('lr_G', 0.0005), ('weight_decay_G', 0), ('beta1', 0.9), ('beta2', 0.99), ('lr_scheme', 'MultiStepLR'), ('warmup_iter', -1), ('lr_steps_rel', [0.5, 0.75, 0.9, 0.95]), ('lr_gamma', 0.5), ('weight_l1', 0), ('weight_fl', 1), ('niter', 45000), ('val_freq', 200), ('lr_steps', [22500, 33750, 40500, 42750])])
+Out dir: I:\Python\Research\Baselines\Baseline3\LLFlow\code\..\results\.\code\confs\LOL_smallNet
+Setting up [LPIPS] perceptual loss: trunk [alex], v[0.1], spatial [off]
+Downloading: "https://download.pytorch.org/models/alexnet-owt-7be5be79.pth" to C:\Users\BBM/.cache\torch\hub\checkpoints\alexnet-owt-7be5be79.pth
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 233M/233M [00:39<00:00, 6.15MB/s]
+Loading model from: C:\Users\BBM\miniconda3\envs\LLFlow\lib\site-packages\lpips\weights\v0.1\alex.pth
+Traceback (most recent call last):
+  File ".\code\test.py", line 187, in <module>
+    main()
+  File ".\code\test.py", line 169, in main
+    df.to_csv(path_out_measures, index=False)
+AttributeError: 'NoneType' object has no attribute 'to_csv'
+(LLFlow) PS I:\Python\Research\Baselines\Baseline3\LLFlow> 
