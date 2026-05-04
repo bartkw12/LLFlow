@@ -1,0 +1,34 @@
+general
+
+conf: the config name used for the run. Yours shows .\code\confs\LOL_smallNet because the command used Windows-style relative slashes.
+heat: the latent sampling temperature. 0 means deterministic inference, which is the standard setting here.
+name: just the sample index, not a semantic score.
+PSNR: Peak Signal-to-Noise Ratio, a pixel-level fidelity metric in dB. Higher is better.
+SSIM: Structural Similarity Index, a perceptual/structure-aware similarity score. Higher is better, with 1.0 being perfect.
+LPIPS: Learned Perceptual Image Patch Similarity. Lower is better, with 0 meaning perceptually identical.
+LRC PSNR: PSNR between the original low-light input and a reconstruction derived from the model output. In this repo with scale: 1, it is mostly a “how different is the result from the input” sanity check, not the main quality metric
+
+small Net
+
+How to interpret your numbers
+
+PSNR = 13.14 is low if you treat this as a strict reconstruction task. In benchmark settings, higher PSNR means the enhanced image is much closer pixel-by-pixel to the ground-truth lights-on image. A score around 13 dB means your result differs quite a lot from the reference at the pixel level.
+
+SSIM = 0.72 is moderate. That says the model preserved a fair amount of large-scale structure, but it is not especially close to the ground truth. In plain terms, the output may look somewhat like the lights-on scene spatially, but it still differs noticeably in local contrast, brightness distribution, or fine detail.
+
+LPIPS = 0.63 is relatively high, which is not good. Since lower is better, this suggests the model output is perceptually far from the lights-on reference. That does not necessarily mean the output is useless, but it does mean the result is not visually close to your target image according to the learned perceptual metric.
+
+LRC PSNR = 6.79 is very low, but that is not the main thing to judge here. In this codebase it is not “quality versus ground truth”; it is more like a consistency check relative to the input. Because enhancement intentionally changes brightness and appearance a lot, a low value here is expected.
+
+What the overall result means
+
+Taken together, these numbers say the small-net model did not reproduce your bathroom lights-on image very faithfully. It changed the dark input substantially, but the output still remained far from the true bright reference both in pixel terms and perceptual terms. That is not surprising for three reasons:
+
+You are testing on a single real-world pair, not on the LOL benchmark distribution the model was trained for.
+A manually captured lights-off / lights-on pair is rarely perfectly aligned.
+Phone auto-exposure, white balance, slight camera movement, and lighting differences can all hurt PSNR, SSIM, and LPIPS even if the output looks somewhat plausible.
+So the right interpretation is not “the model is broken.” It is more like “the model runs correctly, but on this custom bathroom pair it does not match the reference very closely.”
+
+Report Summary
+
+On a custom paired bathroom test using the LLFlow small model, the run completed successfully and produced PSNR = 13.14, SSIM = 0.72, and LPIPS = 0.63. These values indicate that the enhanced output preserved some scene structure but remained substantially different from the lights-on ground-truth image in both pixel-level and perceptual terms. This suggests that while the model functions correctly, its performance on this manually captured indoor pair is limited, likely due to domain mismatch and imperfect pair alignment rather than inference failure.
