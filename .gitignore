@@ -136,3 +136,10 @@ dmypy.json
 # weights
 weights/
 *.pth
+
+# Local training data and downloaded dataset archives
+/training/
+/*.zip
+/*.7z
+/*.tar
+/*.gz
