@@ -1,3 +1,2 @@
-(LLFlow) PS I:\Python\Research\Baselines\Baseline3\LLFlow> python test_unpaired.py --opt LOL_smallNet.yml -n first_run
-C:\Users\BBM\miniconda3\envs\LLFlow\python.exe: can't open file 'test_unpaired.py': [Errno 2] No such file or directory
-(LLFlow) PS I:\Python\Research\Baselines\Baseline3\LLFlow> 
+python code/test_unpaired.py --opt code/confs/LOL_smallNet.yml -n first_run
+
