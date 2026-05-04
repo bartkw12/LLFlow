@@ -32,3 +32,17 @@ So the right interpretation is not “the model is broken.” It is more like �
 Report Summary
 
 On a custom paired bathroom test using the LLFlow small model, the run completed successfully and produced PSNR = 13.14, SSIM = 0.72, and LPIPS = 0.63. These values indicate that the enhanced output preserved some scene structure but remained substantially different from the lights-on ground-truth image in both pixel-level and perceptual terms. This suggests that while the model functions correctly, its performance on this manually captured indoor pair is limited, likely due to domain mismatch and imperfect pair alignment rather than inference failure.
+
+
+lol-pc
+
+Findings
+
+On your paired bathroom test, LOL_smallNet was better than LOL-pc on the two most useful fidelity metrics reported in terminal_result.txt.
+SmallNet achieved PSNR 13.14 and SSIM 0.72, while LOL-pc achieved PSNR 12.78 and SSIM 0.60.
+LPIPS was effectively unchanged at 0.63 for both models, so the larger model did not deliver a perceptual improvement on this pair.
+LRC PSNR was 6.79 for SmallNet and 6.64 for LOL-pc, which suggests the larger model altered the low-light input slightly more aggressively.
+The larger LOL-pc model therefore did not help on this custom indoor pair and appears to have been less faithful to the lights-on reference.
+The CSV output is still showing duplicate rows for what looks like a single pair. Because the duplicate values are identical, the mean is still usable, but for a perfectly clean report you should delete the old measure_full.csv files and rerun once.
+
+
