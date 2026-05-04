@@ -1,22 +1,16 @@
-For LOL_smallNet
+Paired Test results
 
-(LLFlow) PS I:\Python\Research\Baselines\Baseline3\LLFlow> python code/test_unpaired.py --opt code/confs/LOL_smallNet.yml -n first_run
-I:\Python\Research\Baselines\Baseline3\LLFlow\code\imresize.py:137: SyntaxWarning: "is" with a literal. Did you mean "=="?
-  if method is 'bicubic':
-I:\Python\Research\Baselines\Baseline3\LLFlow\code\imresize.py:139: SyntaxWarning: "is" with a literal. Did you mean "=="?
-  elif method is 'bilinear':
+Small Net
+
+(LLFlow) PS I:\Python\Research\Baselines\Baseline3\LLFlow> python .\code\test.py --opt .\code\confs\LOL_smallNet.yml
 OrderedDict([('manual_seed', 10), ('lr_G', 0.0005), ('weight_decay_G', 0), ('beta1', 0.9), ('beta2', 0.99), ('lr_scheme', 'MultiStepLR'), ('warmup_iter', -1), ('lr_steps_rel', [0.5, 0.75, 0.9, 0.95]), ('lr_gamma', 0.5), ('weight_l1', 0), ('weight_fl', 1), ('niter', 45000), ('val_freq', 200), ('lr_steps', [22500, 33750, 40500, 42750])])
-Out dir: I:\Python\Research\Baselines\Baseline3\LLFlow\code\..\results\LOL_smallNet\first_run
-0it [00:00, ?it/s]C:\Users\BBM\miniconda3\envs\LLFlow\lib\site-packages\torch\nn\functional.py:718: UserWarning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (Triggered internally at  ..\c10/core/TensorImpl.h:1156.)
+Out dir: I:\Python\Research\Baselines\Baseline3\LLFlow\code\..\results\.\code\confs\LOL_smallNet
+Setting up [LPIPS] perceptual loss: trunk [alex], v[0.1], spatial [off]
+Loading model from: C:\Users\BBM\miniconda3\envs\LLFlow\lib\site-packages\lpips\weights\v0.1\alex.pth
+C:\Users\BBM\miniconda3\envs\LLFlow\lib\site-packages\torch\nn\functional.py:718: UserWarning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (Triggered internally at  ..\c10/core/TensorImpl.h:1156.)
   return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)
-2it [00:04,  2.38s/it]
-
-For lol-pc
-
-(LLFlow) PS I:\Python\Research\Baselines\Baseline3\LLFlow> python code/test_unpaired.py --opt code/confs/LOL-pc.yml -n first_run_pc
-OrderedDict([('manual_seed', 10), ('lr_G', 0.0005), ('weight_decay_G', 0), ('beta1', 0.9), ('beta2', 0.99), ('lr_scheme', 'MultiStepLR'), ('warmup_iter', 3000), ('lr_steps_rel', [0.5, 0.75, 0.9, 0.95]), ('lr_gamma', 0.5), ('weight_l1', 0), ('weight_fl', 1), ('niter', 40000), ('val_freq', 200), ('lr_steps', [20000, 30000, 36000, 38000])])
-Out dir: I:\Python\Research\Baselines\Baseline3\LLFlow\code\..\results\LOL-pc\first_run_pc
-0it [00:00, ?it/s]C:\Users\BBM\miniconda3\envs\LLFlow\lib\site-packages\torch\nn\functional.py:718: UserWarning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (Triggered internally at  ..\c10/core/TensorImpl.h:1156.)
-  return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)
-2it [00:12,  6.32s/it]
-
+conf: .\code\confs\LOL_smallNet, heat: 0, name: 0, PSNR: 13.14, SSIM: 0.72, LPIPS: 0.63, LRC PSNR: 6.79
+conf: .\code\confs\LOL_smallNet, heat: 0, name: 1, PSNR: 13.14, SSIM: 0.72, LPIPS: 0.63, LRC PSNR: 6.79
+Results in: I:\Python\Research\Baselines\Baseline3\LLFlow\code\..\results\.\code\confs\LOL_smallNet\measure_full.csv
+Mean: heat: 0.00, name: 0.50, PSNR: 13.14, SSIM: 0.72, LPIPS: 0.63, LRC PSNR: 6.79
+(LLFlow) PS I:\Python\Research\Baselines\Baseline3\LLFlow> 
