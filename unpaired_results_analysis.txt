@@ -1,0 +1,34 @@
+On my two unpaired test images, LLFlow behaved very differently depending on the scene.
+
+For the outdoor dark image, both models improved visibility in a way that looked reasonable. The small model increased brightness and revealed detail in dark regions, especially around the mountains, though the result looked somewhat soft or blurry. The larger LOL-pc model pushed the enhancement further, producing a brighter image with more visible detail. In this case, the model appeared to work as intended.
+
+For the indoor dark image, both models failed qualitatively. The small model brightened the image but introduced a smoky or cloudy haze across the room. The larger LOL-pc model amplified this failure even more, producing a very foggy and unnatural result.
+
+Why the outdoor image likely worked better
+A likely explanation is that the outdoor image was closer to the kind of low-light data the model learned from during training. Outdoor low-light scenes often contain:
+
+clearer large-scale structure
+more natural shadow regions
+fewer difficult indoor lighting effects
+less ambiguity about how brightness should be redistributed
+In that setting, LLFlow’s learned enhancement prior can help recover useful detail without badly distorting the scene. The larger model has more capacity, so when the scene matches its training assumptions, it can produce a stronger and often better-looking enhancement.
+
+Why the indoor image likely produced haze and artifacts
+The indoor failure is likely a distribution mismatch problem. The model appears to be treating some image content as if it were recoverable low-light structure, when in reality it may be:
+
+smooth illumination gradients
+compression artifacts
+color cast from artificial lighting
+low-contrast flat surfaces
+ambiguous shadow/noise patterns
+Instead of cleanly recovering detail, the model seems to over-amplify these weak or ambiguous signals. This can create foggy halos, haze, or cloudy-looking artifacts. In other words, the model is applying a strong “make this look like a plausible bright image” prior, but for this indoor image that prior appears to be wrong.
+
+Why the larger model made the bad result worse
+The larger LOL-pc model does not simply produce a better version of every result. It applies a stronger learned enhancement prior. That helps when the scene matches the training distribution, but it can worsen failure cases when the scene does not match. In my tests:
+
+on the outdoor image, the stronger model improved detail and brightness
+on the indoor image, the stronger model exaggerated the haze artifact
+So the larger model is not necessarily more robust. It is often more aggressive.
+
+Practical takeaway
+These tests suggest that LLFlow is functioning correctly, but its output quality depends strongly on how similar the input image is to the training data. It seems more reliable on some outdoor low-light scenes, while certain indoor scenes may trigger over-enhancement and haze-like artifacts. This is an important reminder that successful inference does not necessarily mean good generalization across all low-light image types.
